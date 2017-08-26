@@ -53,10 +53,5 @@
     "redux": "^3.7.2",
     "whatwg-fetch": "^2.0.3"
   },
-  "pre-commit": [
-    "prettify",
-    "lint",
-    "validate",
-    "test"
-  ]
+  "pre-commit": ["prettify", "lint", "validate", "test"]
 }
