@@ -17,6 +17,10 @@ const commonConfig = {
     sourceMapFilename: "[name].map"
   },
 
+  externals: {
+    window: "window"
+  },
+
   resolve: {
     // Automatically resolve certain extensions. This defaults to:
     extensions: [".js", ".json"],
