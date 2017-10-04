@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+// eslint-disable-next-line
+import { document } from "window";
 import { Provider } from "react-redux";
 import configureStore from "./redux/configure_store";
 import RootContainer from "./containers/root_container";
@@ -11,5 +13,5 @@ ReactDOM.render(
     <RootContainer />
   </Provider>,
   // eslint-disable-next-line
-  document.getElementById("root_container")
+  document.getElementById("app")
 );

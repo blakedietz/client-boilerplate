@@ -8,19 +8,15 @@
  * (configure_store.dev.js) file as well.
  */
 
-import { createStore, compose } from 'redux';
-import window from 'window';
-import rootReducer from './root_reducer';
+import { createStore, compose } from "redux";
+import window from "window";
+import rootReducer from "./root_reducer";
 
 // Check to see if there's redux dev tools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default function configureStore(initialState) {
-  const store = createStore(
-    rootReducer,
-    initialState,
-    composeEnhancers(),
-  );
+  const store = createStore(rootReducer, initialState, composeEnhancers());
 
   return store;
 }

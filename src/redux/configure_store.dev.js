@@ -11,9 +11,9 @@
  *
  *  */
 
-import { createStore, applyMiddleware, compose } from 'redux';
-import window from 'window';
-import rootReducer from './root_reducer';
+import { createStore, applyMiddleware, compose } from "redux";
+import window from "window";
+import rootReducer from "./root_reducer";
 
 // Check to see if there's redux dev tools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -22,19 +22,16 @@ export default function configureStore(initialState) {
   const store = createStore(
     rootReducer,
     initialState,
-    composeEnhancers(
-          applyMiddleware(),
-        ),
+    composeEnhancers(applyMiddleware())
   );
 
   if (module.hot) {
-      // Enable Webpack hot module replacement for reducers
-      module.hot.accept('./root_reducer', () => {
-      const nextRootReducer = require('./root_reducer').default;
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept("./root_reducer", () => {
+      const nextRootReducer = require("./root_reducer").default;
       store.replaceReducer(nextRootReducer);
     });
   }
-
 
   return store;
 }

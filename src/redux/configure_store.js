@@ -7,9 +7,8 @@
  * 1. Devtools should not be included in production builds.
  * 2. Hot module reloading support should only be taken into account for development.
  */
-if (process.env.NODE_ENV === 'production') {
-module.exports = require('./configure_store.prod.js');
+if (process.env.NODE_ENV === "production") {
+  module.exports = require("./configure_store.prod.js");
 } else {
-module.exports = require('./configure_store.dev.js');
+  module.exports = require("./configure_store.dev.js");
 }
-

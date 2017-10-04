@@ -4,7 +4,7 @@
  * if there are plans to use this store at a higher level that is a viable option.
  */
 
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
 /**
  * Note here that each reducer name is mapped to the corresponding state key in redux.
