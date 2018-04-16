@@ -31,6 +31,8 @@
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-exponentiation-operator": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
     "commitizen": "^2.9.6",
     "css-loader": "^0.28.11",

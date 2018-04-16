@@ -1,10 +1,9 @@
 const Merge = require("webpack-merge");
 const CommonConfig = require("./webpack.common");
-const webpack = require("webpack");
 const publicPath = require("./webpack-helper").ASSET_PATH;
 
 module.exports = Merge(CommonConfig, {
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  mode: "development",
 
   devtool: "cheap-module-source-map",
 

@@ -1,10 +1,10 @@
 {
   "presets": [
-    "react",
-    ["env", {
-      "targets": {
-        "chrome": "62.0.0"
-      }
-    }]
+    "env",
+    "babel-preset-react"
+  ],
+  "plugins": [
+    "babel-plugin-transform-exponentiation-operator",
+    "babel-plugin-transform-class-properties"
   ]
 }
