@@ -49,9 +49,6 @@ const commonConfig = {
   plugins: [
     // Clean the dist folder
     new CleanWebpackPlugin(["dist"]),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "common"
-    }),
     // Create a new index.html that refers to the bundled assets
     new HtmlWebpackPlugin({
       title: "App Boilerplate",

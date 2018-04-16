@@ -8,7 +8,7 @@
  * 2. Hot module reloading support should only be taken into account for development.
  */
 if (process.env.NODE_ENV === "production") {
-  module.exports = require("./configure_store.prod.js");
+  module.exports = require("./configure-store.prod.js");
 } else {
-  module.exports = require("./configure_store.dev.js");
+  module.exports = require("./configure-store.dev.js");
 }

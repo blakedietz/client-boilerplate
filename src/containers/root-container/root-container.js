@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import "./root_container.css";
+import "./root-container.css";
 
 class RootContainer extends Component {
   render() {

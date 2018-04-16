@@ -7,13 +7,13 @@
  *
  * NOTE:
  * If you make changes to functionality in this file, make sure to make those changes in the development
- * (configure_store.prod.js) file as well.
+ * (configure-store.prod.js) file as well.
  *
  *  */
 
 import { createStore, applyMiddleware, compose } from "redux";
 import window from "window";
-import rootReducer from "./root_reducer";
+import rootReducer from "./root-reducer";
 
 // Check to see if there's redux dev tools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -28,7 +28,7 @@ export default function configureStore(initialState) {
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept("./root_reducer", () => {
-      const nextRootReducer = require("./root_reducer").default;
+      const nextRootReducer = require("./root-reducer").default;
       store.replaceReducer(nextRootReducer);
     });
   }
