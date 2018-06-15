@@ -14,15 +14,19 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import window from "window";
 import rootReducer from "./root-reducer";
+import { createEpicMiddleware } from 'redux-observable';
+import { rootEpic } from './index';
 
 // Check to see if there's redux dev tools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export default function configureStore(initialState) {
+const epicMiddleware = createEpicMiddleware(rootEpic);
+
+function configureStore(initialState) {
   const store = createStore(
     rootReducer,
     initialState,
-    composeEnhancers(applyMiddleware())
+    composeEnhancers(applyMiddleware(epicMiddleware))
   );
 
   if (module.hot) {
@@ -35,3 +39,5 @@ export default function configureStore(initialState) {
 
   return store;
 }
+
+export default configureStore

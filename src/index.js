@@ -1,3 +1,5 @@
+import "rxjs";
+
 import React from "react";
 import ReactDOM from "react-dom";
 import JssProvider from "react-jss/lib/JssProvider";
