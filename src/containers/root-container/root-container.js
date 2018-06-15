@@ -4,8 +4,9 @@ import AppBar from "../app-bar";
 
 class RootContainer extends Component {
   render() {
-    return (<React.Fragment>
-        <AppBar/>
+    return (
+      <React.Fragment>
+        <AppBar />
         <main>Content</main>
       </React.Fragment>
     );
