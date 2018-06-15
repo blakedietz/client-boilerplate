@@ -11,14 +11,18 @@
  *
  *  */
 
-import { createStore, applyMiddleware, compose } from "redux";
+import createHistory from "history/createBrowserHistory";
 import window from "window";
+import { createEpicMiddleware } from "redux-observable";
+import { createStore, applyMiddleware, compose } from "redux";
+import { routerMiddleware } from "react-router-redux";
+import { rootEpic } from "./index";
 import rootReducer from "./root-reducer";
-import { createEpicMiddleware } from 'redux-observable';
-import { rootEpic } from './index';
 
 // Check to see if there's redux dev tools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const history = createHistory();
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
 
@@ -26,7 +30,12 @@ function configureStore(initialState) {
   const store = createStore(
     rootReducer,
     initialState,
-    composeEnhancers(applyMiddleware(epicMiddleware))
+    composeEnhancers(
+      applyMiddleware(
+        epicMiddleware,
+        routerMiddleware(history)
+      )
+    )
   );
 
   if (module.hot) {
@@ -40,4 +49,8 @@ function configureStore(initialState) {
   return store;
 }
 
-export default configureStore
+export default configureStore;
+
+export {
+  history
+};

@@ -26,12 +26,12 @@ function ButtonAppBar(props) {
 }
 
 ButtonAppBar.propTypes = {
-  classes: PropTypes.shape({
-    classes: PropTypes.shape({
-      menuButton: PropTypes.object,
-      flex: PropTypes.object
-    })
-  }).isRequired
+  // classes: PropTypes.shape({
+  //   classes: PropTypes.shape({
+  //     menuButton: PropTypes.object,
+  //     flex: PropTypes.object
+  //   })
+  // })
 };
 
 export default withStyles(styles)(ButtonAppBar);
