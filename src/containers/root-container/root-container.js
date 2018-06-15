@@ -1,20 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import "./root-container.css";
+import AppBar from "../app-bar";
 
 class RootContainer extends Component {
   render() {
-    return [
-      <header className="holy-grail-header">header</header>,
-      <div className="holy-grail">
-        <div className="holy-grail-body">
-          <nav className="holy-grail-nav">Nav</nav>
-          <main className="holy-grail-content">Content</main>
-          <aside className="holy-grail-ads">Side bar</aside>
-        </div>
-      </div>,
-      <footer className="holy-grail-footer">footer</footer>
-    ];
+    return (<React.Fragment>
+        <AppBar/>
+        <main>Content</main>
+      </React.Fragment>
+    );
   }
 }
 

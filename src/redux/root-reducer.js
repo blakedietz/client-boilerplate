@@ -11,5 +11,5 @@ import { combineReducers } from "redux";
  */
 export default combineReducers({
   // Your reducers go here
-  // reduerStateName: reducer,
+  foo: () => ({})
 });
