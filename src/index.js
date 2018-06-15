@@ -11,6 +11,7 @@ import { document } from "window";
 import { Provider } from "react-redux";
 import configureStore from "./redux/configure-store";
 import RootContainer from "./containers/root-container";
+import "typeface-roboto";
 
 const store = configureStore();
 

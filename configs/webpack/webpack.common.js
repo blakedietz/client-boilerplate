@@ -38,6 +38,20 @@ const commonConfig = {
       {
         test: /\.(png|svg|jpg|gif)$/,
         use: ["file-loader"]
+      },
+      {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ]
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'fonts/'
+          }
+        }]
       }
     ]
   },
@@ -56,7 +70,8 @@ const commonConfig = {
           content: "App boilerplate",
         },
         {
-          viewport: "width=device-width, initial-scale=1, shrink-to-fit=no"
+          name: "viewport",
+          content: "width=device-width"
         }
       ],
       lang: "en-US"
