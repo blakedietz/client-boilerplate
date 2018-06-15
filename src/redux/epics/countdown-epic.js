@@ -2,12 +2,12 @@ import "rxjs";
 import { Observable } from "rxjs/Observable";
 import { START_COUNTDOWN, INCREMENT_ASYNC, INCREMENT, CANCEL_INCREMENT_ASYNC } from "../action-types";
 
-const startCountdownEpic = (action$) => {
+const startCountdownEpic = (action$) => 
   /*
    * This action does not exist in the corresponding redux saga example: it's used to isolate
    * better a single countdown worflow.
    */
-  return action$.ofType(START_COUNTDOWN).switchMap(q => {
+   action$.ofType(START_COUNTDOWN).switchMap(() => {
     const start = 5;
 
     /*
@@ -21,13 +21,13 @@ const startCountdownEpic = (action$) => {
     return Observable
       .timer(0, 1000)
       .mergeMap(tick => {
-        //when we reach 5 we schedule 5 and 6.
+        // when we reach 5 we schedule 5 and 6.
         if (tick === start) {
-          return Observable.timer(0, 10).mergeMap(y => Observable.of(start, start + 1));
+          return Observable.timer(0, 10).mergeMap(() => Observable.of(start, start + 1));
         }
-        else {
+        
           return Observable.of(tick);
-        }
+        
       })
       .map(i => start - i)
       .take(start + 2)
@@ -39,13 +39,13 @@ const startCountdownEpic = (action$) => {
           return { type: INCREMENT };
         }
         // increment async action
-        else {
+        
           return { type: INCREMENT_ASYNC, value: seconds };
-        }
+        
       });
   });
-};
 
 export {
+// eslint-disable-next-line import/prefer-default-export
   startCountdownEpic
 };

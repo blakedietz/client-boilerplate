@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import AppBar from "../app-bar";
 
+// eslint-disable-next-line react/prefer-stateless-function
 class RootContainer extends Component {
   render() {
     return (

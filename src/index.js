@@ -1,4 +1,6 @@
 import "rxjs";
+// eslint-disable-next-line
+import "typeface-roboto";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -11,7 +13,6 @@ import { document } from "window";
 import { Provider } from "react-redux";
 import configureStore from "./redux/configure-store";
 import RootContainer from "./containers/root-container";
-import "typeface-roboto";
 
 const store = configureStore();
 

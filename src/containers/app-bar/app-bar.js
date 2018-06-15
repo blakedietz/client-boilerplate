@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+import PropTypes from "react-prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -14,8 +14,7 @@ function ButtonAppBar(props) {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-          </IconButton>
+          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" />
           <Typography variant="title" color="inherit" className={classes.flex}>
             flood.ink
           </Typography>
@@ -27,7 +26,12 @@ function ButtonAppBar(props) {
 }
 
 ButtonAppBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.shape({
+    classes: PropTypes.shape({
+      menuButton: PropTypes.object,
+      flex: PropTypes.object
+    })
+  }).isRequired
 };
 
 export default withStyles(styles)(ButtonAppBar);
