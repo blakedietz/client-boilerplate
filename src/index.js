@@ -24,8 +24,8 @@ ReactDOM.render(
     <ConnectedRouter history={history}>
       <JssProvider jss={jss}>
         <React.Fragment>
-          <CssBaseline/>
-          <RootContainer/>
+          <CssBaseline />
+          <RootContainer />
         </React.Fragment>
       </JssProvider>
     </ConnectedRouter>

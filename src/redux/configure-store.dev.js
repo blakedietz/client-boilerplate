@@ -16,7 +16,7 @@ import window from "window";
 import { createEpicMiddleware } from "redux-observable";
 import { createStore, applyMiddleware, compose } from "redux";
 import { routerMiddleware } from "react-router-redux";
-import { rootEpic } from "./index";
+import { rootEpic } from "./root-epic";
 import rootReducer from "./root-reducer";
 
 // Check to see if there's redux dev tools

@@ -5,12 +5,11 @@
  */
 
 import { combineReducers } from "redux";
-import { counter, countdown } from "./reducer/counter";
+import countdown from "./modules/countdown";
 
 /**
  * Note here that each reducer name is mapped to the corresponding state key in redux.
  */
 export default combineReducers({
-  counter,
   countdown
 });

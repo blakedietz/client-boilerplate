@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import AppBar from "../app-bar";
+import CountDownController from "../countdown-controller";
 
 // eslint-disable-next-line react/prefer-stateless-function
 class RootContainer extends Component {
@@ -8,7 +9,9 @@ class RootContainer extends Component {
     return (
       <React.Fragment>
         <AppBar />
-        <main>Content</main>
+        <main>
+          <CountDownController />
+        </main>
       </React.Fragment>
     );
   }

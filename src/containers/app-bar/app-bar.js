@@ -16,7 +16,7 @@ function ButtonAppBar(props) {
         <Toolbar>
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" />
           <Typography variant="title" color="inherit" className={classes.flex}>
-            flood.ink
+            Test
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
@@ -25,13 +25,9 @@ function ButtonAppBar(props) {
   );
 }
 
-ButtonAppBar.propTypes = {
-  // classes: PropTypes.shape({
-  //   classes: PropTypes.shape({
-  //     menuButton: PropTypes.object,
-  //     flex: PropTypes.object
-  //   })
-  // })
+ButtonAppBar.propTypes ={
+  // eslint-disable-next-line react/forbid-prop-types
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(ButtonAppBar);

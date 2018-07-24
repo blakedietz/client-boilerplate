@@ -6,7 +6,7 @@ const webpack = require("webpack");
 module.exports = Merge(CommonConfig, {
   mode: "development",
 
-  devtool: "cheap-module-source-map",
+  devtool: "inline-source-map",
 
   devServer: {
     port: 7777,
