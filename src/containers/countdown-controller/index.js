@@ -25,6 +25,10 @@ const styles = theme => ({
 class ContainedButtons extends Component {
   render() {
     const { classes } = this.props;
+    const totalTimeLeft = this.props.timerDuration - this.props.elapsedTimeInSeconds;
+    const totalMinutesLeft = Math.floor(totalTimeLeft / 60);
+    const secondToSubtract = this.props.elapsedTimeInSeconds % 60;
+    const seconds = (60 - secondToSubtract) % 60;
 
     return (
       <div>
@@ -32,7 +36,7 @@ class ContainedButtons extends Component {
           <Card className={classes.card}>
             <CardContent className={classes.cardContent}>
               <Typography variant="display4" >
-                {this.props.counter}
+                {totalMinutesLeft < 10 ? `0${totalMinutesLeft}` : totalMinutesLeft}:{seconds < 10 ? `0${seconds}` : seconds}
               </Typography>
             </CardContent>
             <CardActions>
@@ -44,7 +48,12 @@ class ContainedButtons extends Component {
               >
                 Start
               </Button>
-              <Button variant="contained" color="secondary" className={classes.button}>
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+                onClick={this.props.stopCountdown}
+              >
                 Stop
               </Button>
             </CardActions>
@@ -58,16 +67,20 @@ class ContainedButtons extends Component {
 ContainedButtons.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   classes: PropTypes.object.isRequired,
-  counter: PropTypes.number.isRequired,
-  startCountdown: PropTypes.func.isRequired
+  elapsedTimeInSeconds: PropTypes.number.isRequired,
+  timerDuration: PropTypes.number.isRequired,
+  startCountdown: PropTypes.func.isRequired,
+  stopCountdown: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  counter: selectors.getTimeInSeconds(state)
+  elapsedTimeInSeconds: selectors.getElapsedTimeInSeconds(state),
+  timerDuration: selectors.getTimerDuration(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  startCountdown: () => dispatch(actionCreators.startCountdown())
+  startCountdown: () => dispatch(actionCreators.startCountdown()),
+  stopCountdown: () => dispatch(actionCreators.countdownTerminated())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)
