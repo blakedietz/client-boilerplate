@@ -18,6 +18,8 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { routerMiddleware } from "react-router-redux";
 import { rootEpic } from "./root-epic";
 import rootReducer from "./root-reducer";
+import { offline } from 'redux-offline';
+import offlineConfig from 'redux-offline/lib/defaults';
 
 // Check to see if there's redux dev tools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -26,16 +28,22 @@ const history = createHistory();
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
 
+
 function configureStore(initialState) {
+  const enhancers = composeEnhancers(
+    applyMiddleware(
+      epicMiddleware,
+      routerMiddleware(history)
+    ),
+    offline(offlineConfig),
+    // https://github.com/zalmoxisus/redux-devtools-extension/issues/365
+    (createStore) => (reducer, preloadedState, enhancer) => enhancer(createStore)(reducer, preloadedState)
+  );
+
   const store = createStore(
     rootReducer,
     initialState,
-    composeEnhancers(
-      applyMiddleware(
-        epicMiddleware,
-        routerMiddleware(history)
-      )
-    )
+    enhancers
   );
 
   if (module.hot) {

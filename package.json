@@ -60,11 +60,11 @@
     "@material-ui/core": "^1.4.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "history": "4.7.2",
-    "jss": "^9.8.3",
+    "jss": "^9.8.7",
+    "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-jss": "^8.5.1",
-    "react-prop-types": "^0.4.0",
+    "react-jss": "^8.6.1",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
@@ -73,6 +73,7 @@
     "redux-actions": "^2.4.0",
     "redux-form": "^7.4.2",
     "redux-observable": "^0.19.0",
+    "redux-offline": "^2.0.0",
     "rxjs": "^5.4.3",
     "typeface-roboto": "^0.0.54",
     "whatwg-fetch": "^2.0.4"
@@ -97,7 +98,6 @@
   },
   "pre-commit": [
     "lint",
-    "validate",
     "test"
   ]
 }
