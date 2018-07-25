@@ -35,7 +35,7 @@ class ContainedButtons extends Component {
         <div>
           <Card className={classes.card}>
             <CardContent className={classes.cardContent}>
-              <Typography variant="display4" >
+              <Typography variant="display4">
                 {totalMinutesLeft < 10 ? `0${totalMinutesLeft}` : totalMinutesLeft}:{seconds < 10 ? `0${seconds}` : seconds}
               </Typography>
             </CardContent>

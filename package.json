@@ -7,7 +7,7 @@
     "build:dev": "webpack  --config=./configs/webpack/webpack.config.js --env=development  --progress --profile --colors",
     "build:dist": "webpack --config=./configs/webpack/webpack.config.js --env=production --progress --profile --colors",
     "commit": "git-cz",
-    "dev-server": "webpack-dev-server --config=./configs/webpack/webpack.config.js --env=development",
+    "dev-server": "yarn run json-server --watch db.json && webpack-dev-server --config=./configs/webpack/webpack.config.js --env=development",
     "lint": "eslint ./src",
     "validate": "npm ls"
   },
@@ -46,6 +46,7 @@
     "html-webpack-plugin": "^4.0.0-alpha",
     "html-webpack-template": "^6.2.0",
     "husky": "^1.0.0-rc.9",
+    "json-server": "^0.14.0",
     "lint-staged": "^7.2.0",
     "precommit-hook-eslint": "^3.0.0",
     "prettier": "^1.13.5",
