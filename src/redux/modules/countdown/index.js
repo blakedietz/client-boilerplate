@@ -13,15 +13,15 @@ export const actionCreators = createActions({
   START_COUNTDOWN: [
     undefined,
     () => ({
-    offline: {
-      // the network action to execute:
-      effect: { url: 'http://localhost:3000/posts', method: 'GET' },
-      // action to dispatch when effect succeeds:
-      commit:  startCountdownCommit(),
-      // action to dispatch if network action fails permanently:
-      rollback: startCountdownRollback()
-    }
-  })],
+      offline: {
+        // the network action to execute:
+        effect: { url: "http://localhost:3000/posts", method: "GET" },
+        // action to dispatch when effect succeeds:
+        commit: startCountdownCommit(),
+        // action to dispatch if network action fails permanently:
+        rollback: startCountdownRollback()
+      }
+    })],
   COUNTDOWN_TERMINATED: undefined
 });
 
@@ -35,9 +35,9 @@ const reducer = handleActions(
   {
     [incrementAsync]: (state) => ({ ...state, elapsedTimeInSeconds: (state.elapsedTimeInSeconds + 1) }),
     [combineActions(countdownTerminated)]: (state) => ({ ...state, elapsedTimeInSeconds: 0 }),
-    [combineActions(startCountdown, startCountdownCommit, startCountdownRollback)]: (state,) => ({ ...state })
+    [combineActions(startCountdown, startCountdownCommit, startCountdownRollback)]: (state) => ({ ...state })
   },
-  { timerDuration: 25 * 60, elapsedTimeInSeconds: 0 }
+  { timerDuration: 5, elapsedTimeInSeconds: 0 }
 );
 
 export default reducer;
@@ -51,14 +51,16 @@ export const selectors = {
 };
 
 const startCountdownEpic = (action$, store) =>
-  action$.ofType(startCountdown).switchMap(() => Observable
+  action$.ofType(startCountdown)
+    .delay(1000)
+    .switchMap(() => Observable
       .timer(0, 1000)
       .mergeMap(tick => Observable.of(tick))
       // supports cancellation
       .takeUntil(action$.ofType(countdownTerminated))
       .map(seconds => {
         // actual increment action
-        if ( (getElapsedTimeInSeconds(store.getState()) * 1000 ) === getTimerDuration(store.getState())) {
+        if ((getElapsedTimeInSeconds(store.getState())) === getTimerDuration(store.getState())) {
           return countdownTerminated();
         }
         // increment async action

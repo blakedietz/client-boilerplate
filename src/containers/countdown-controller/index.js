@@ -28,7 +28,9 @@ class ContainedButtons extends Component {
     const totalTimeLeft = this.props.timerDuration - this.props.elapsedTimeInSeconds;
     const totalMinutesLeft = Math.floor(totalTimeLeft / 60);
     const secondToSubtract = this.props.elapsedTimeInSeconds % 60;
-    const seconds = (60 - secondToSubtract) % 60;
+    const seconds = this.props.timerDuration < 60
+      ? this.props.timerDuration - this.props.elapsedTimeInSeconds
+      : (60 - secondToSubtract) % 60;
 
     return (
       <div>
