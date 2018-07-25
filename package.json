@@ -7,7 +7,8 @@
     "build:dev": "webpack  --config=./configs/webpack/webpack.config.js --env=development  --progress --profile --colors",
     "build:dist": "webpack --config=./configs/webpack/webpack.config.js --env=production --progress --profile --colors",
     "commit": "git-cz",
-    "dev-server": "yarn run json-server --watch db.json && webpack-dev-server --config=./configs/webpack/webpack.config.js --env=development",
+    "start": "webpack-dev-server --config=./configs/webpack/webpack.config.js --env=development",
+    "mock-api": "yarn run json-server --watch db.json",
     "lint": "eslint ./src",
     "validate": "npm ls"
   },
