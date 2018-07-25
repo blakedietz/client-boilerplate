@@ -69,6 +69,7 @@ const commonConfig = {
           name: "description",
           content: "App boilerplate",
         },
+        // Adds the ability to view on mobile while keeping component dimensions
         {
           name: "viewport",
           content: "width=device-width"
