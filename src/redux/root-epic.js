@@ -1,8 +1,11 @@
 import { combineEpics } from "redux-observable";
-import { startCountdownEpic } from "./modules/countdown";
+import { epics as countDownEpics } from "./modules/countdown";
+
+const { startCountdownEpic, changeTimerDurationEpic } = countDownEpics;
 
 const rootEpic = combineEpics(
-  startCountdownEpic
+  startCountdownEpic,
+  changeTimerDurationEpic
 );
 
 export default rootEpic;

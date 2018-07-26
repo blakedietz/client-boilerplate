@@ -1,4 +1,5 @@
 {
+  "parser": "babel-eslint",
   "extends": [
     "airbnb",
     "prettier"
@@ -13,6 +14,10 @@
           ".jsx"
         ]
       }
-    ]
-  }
+    ],
+    "strict": 0
+  },
+  "plugins": [
+    "babel"
+  ]
 }

@@ -5,11 +5,13 @@
  */
 
 import { combineReducers } from "redux";
+import { reducer as form } from "redux-form";
 import countdown from "./modules/countdown";
 
 /**
  * Note here that each reducer name is mapped to the corresponding state key in redux.
  */
 export default combineReducers({
-  countdown
+  countdown,
+  form
 });
