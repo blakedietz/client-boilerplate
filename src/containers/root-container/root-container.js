@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 import DocumentTitle from "react-document-title";
-import { selectors } from "../../redux/modules/countdown";
+import { getPrettyTime } from "../../redux/modules/countdown/selectors";
 import AppBar from "../app-bar";
 import CountDownController from "../countdown-controller";
 import withRoot from "../../utilities/with-root";
@@ -52,7 +52,7 @@ class RootContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  prettyTime: selectors.getPrettyTime(state)
+  prettyTime: getPrettyTime(state)
 });
 
 const mapDispatchToProps = dispatch => ({

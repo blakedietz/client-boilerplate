@@ -18,7 +18,20 @@ import { Select, TextField } from "redux-form-material-ui";
 import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { withStyles } from "@material-ui/core/styles";
-import { actionCreators, selectors } from "../../redux/modules/countdown";
+import {
+  getElapsedTimeInSeconds,
+  getIsComplete,
+  getIsElapsing,
+  getIsStopped,
+  getIsPaused,
+  getTimerDuration,
+  getPrettyTime
+} from "../../redux/modules/countdown/selectors";
+import {
+  pauseCountdown,
+  resetCountdown,
+  startCountdown
+} from "../../redux/modules/countdown/action-creators";
 
 const styles = theme => ({
   card: {
@@ -200,18 +213,19 @@ class CountdownController extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  elapsedTimeInSeconds: selectors.getElapsedTimeInSeconds(state),
-  isComplete: selectors.getIsComplete(state),
-  isElapsing: selectors.getIsElapsing(state),
-  isStopped: selectors.getIsStopped(state),
-  timerDuration: selectors.getTimerDuration(state),
-  prettyTime: selectors.getPrettyTime(state)
+  elapsedTimeInSeconds: getElapsedTimeInSeconds(state),
+  isComplete: getIsComplete(state),
+  isElapsing: getIsElapsing(state),
+  isPaused: getIsPaused(state),
+  isStopped: getIsStopped(state),
+  timerDuration: getTimerDuration(state),
+  prettyTime: getPrettyTime(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  startCountdown: () => dispatch(actionCreators.startCountdown()),
-  pauseCountdown: () => dispatch(actionCreators.pauseCountdown()),
-  resetCountdown: () => dispatch(actionCreators.resetCountdown())
+  startCountdown: () => dispatch(startCountdown()),
+  pauseCountdown: () => dispatch(pauseCountdown()),
+  resetCountdown: () => dispatch(resetCountdown())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)

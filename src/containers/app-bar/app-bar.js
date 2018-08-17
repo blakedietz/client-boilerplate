@@ -16,7 +16,7 @@ function ButtonAppBar(props) {
         <Toolbar>
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" />
           <Typography variant="title" color="inherit" className={classes.flex}>
-            Test
+            Pomodoro
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
