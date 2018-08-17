@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -8,13 +7,14 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Collapse from "@material-ui/core/Collapse";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import IconButton from "@material-ui/core/IconButton";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import PropTypes from "prop-types";
 import Typography from "@material-ui/core/Typography";
 import classnames from "classnames";
 import red from "@material-ui/core/colors/red";
-import { Select } from "redux-form-material-ui";
+import { Select, TextField } from "redux-form-material-ui";
 import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { withStyles } from "@material-ui/core/styles";
@@ -49,12 +49,15 @@ const styles = theme => ({
   },
   avatar: {
     backgroundColor: red[500]
+  },
+  progressIndicator: {
+    flexGrow: 1,
   }
 });
 
-let PomodoroDurationLengthSelector = () =>(
+let PomodoroDurationLengthSelector = () => (
   <form>
-    <Field name="plan" component={Select} placeholder="Select a time">
+    <Field name="duration" component={Select} placeholder="Select a time">
       <MenuItem value="focus">Focus</MenuItem>
       <MenuItem value="short-break">Short Break</MenuItem>
       <MenuItem value="long-break">Long Break</MenuItem>
@@ -64,8 +67,38 @@ let PomodoroDurationLengthSelector = () =>(
 
 PomodoroDurationLengthSelector = reduxForm({ form: "currentDurationLengthForm" })(PomodoroDurationLengthSelector);
 
+let TaskTextField = () => (
+  <form>
+    <Field
+      name="taskName"
+      component={TextField}
+      InputLabelProps={{
+             shrink: true,
+           }}
+      placeholder="Task Name"
+      fullWidth
+      margin="normal"
+    />
+  </form>
+);
+
+TaskTextField = reduxForm({ form: "currentDurationLengthForm" })(TaskTextField);
+
 // eslint-disable-next-line react/prefer-stateless-function
 class CountdownController extends Component {
+  static propTypes = {
+    // eslint-disable-next-line react/forbid-prop-types
+    classes: PropTypes.object.isRequired,
+    elapsedTimeInSeconds: PropTypes.number.isRequired,
+    isElapsing: PropTypes.bool.isRequired,
+    isPaused: PropTypes.bool.isRequired,
+    pauseCountdown: PropTypes.func.isRequired,
+    resetCountdown: PropTypes.func.isRequired,
+    startCountdown: PropTypes.func.isRequired,
+    timerDuration: PropTypes.number.isRequired,
+    prettyTime: PropTypes.string.isRequired
+  };
+
   state = {
     expanded: false
   };
@@ -76,12 +109,8 @@ class CountdownController extends Component {
 
   render() {
     const { classes } = this.props;
+    const timePercentage = (this.props.elapsedTimeInSeconds / this.props.timerDuration) * 100;
     const totalTimeLeft = this.props.timerDuration - this.props.elapsedTimeInSeconds;
-    const totalMinutesLeft = Math.floor(totalTimeLeft / 60);
-    const secondToSubtract = this.props.elapsedTimeInSeconds % 60;
-    const seconds = this.props.timerDuration < 60
-      ? this.props.timerDuration - this.props.elapsedTimeInSeconds
-      : (60 - secondToSubtract) % 60;
 
     // Disable the button if the timer is running or if the timer has expired
     const startButtonIsDisabled = this.props.isElapsing || (totalTimeLeft === 0);
@@ -93,22 +122,27 @@ class CountdownController extends Component {
           <Card className={classes.card}>
             <CardHeader
               avatar={
-                <Avatar aria-label="User" className={classes.avatar}>
-                  BD
-                </Avatar>
+                <TaskTextField />
               }
               action={
                 <IconButton>
                   <MoreVertIcon />
                 </IconButton>
               }
-              title="Working hard"
-              subheader="July 23, 2018"
+              // TODO: (bdietz) - Need to wire this into the TaskText Field
+              title=""
+              // TODO: (bdietz) - Figure out what could go here
+              subheader=""
             />
             <CardContent className={classes.cardContent}>
               <Typography variant="display4">
-                {totalMinutesLeft < 10 ? `0${totalMinutesLeft}` : totalMinutesLeft}:{seconds < 10 ? `0${seconds}` : seconds}
+                {this.props.prettyTime}
               </Typography>
+              <LinearProgress
+                className={classes.progressIndicator}
+                variant="determinate"
+                value={timePercentage}
+              />
             </CardContent>
             <CardActions>
               <Button
@@ -165,24 +199,13 @@ class CountdownController extends Component {
   }
 }
 
-CountdownController.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  classes: PropTypes.object.isRequired,
-  elapsedTimeInSeconds: PropTypes.number.isRequired,
-  isElapsing: PropTypes.bool.isRequired,
-  isPaused: PropTypes.bool.isRequired,
-  pauseCountdown: PropTypes.func.isRequired,
-  resetCountdown: PropTypes.func.isRequired,
-  startCountdown: PropTypes.func.isRequired,
-  timerDuration: PropTypes.number.isRequired
-};
-
 const mapStateToProps = (state) => ({
   elapsedTimeInSeconds: selectors.getElapsedTimeInSeconds(state),
   isComplete: selectors.getIsComplete(state),
   isElapsing: selectors.getIsElapsing(state),
   isStopped: selectors.getIsStopped(state),
-  timerDuration: selectors.getTimerDuration(state)
+  timerDuration: selectors.getTimerDuration(state),
+  prettyTime: selectors.getPrettyTime(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,31 +1,36 @@
 import "rxjs";
 import { createActions, handleActions } from "redux-actions";
 import { Observable } from "rxjs/Observable";
+import { minutesInSeconds} from "../../../utilities/time-utilities";
+
+const filterFormActionOnField = (reduxFormAction, formNameSpace, field) => (action) => (action.type === `@@redux-form/${reduxFormAction}`) && (action.meta.form === formNameSpace) && (action.meta.field === field);
 
 const {
-  startCountdownCommit,
-  startCountdownRollback,
   completeCountdownCommit,
   completeCountdownRollback,
-  stopCountdownCommit,
-  stopCountdownRollback,
   pauseCountdownCommit,
   pauseCountdownRollback,
+  playAlarm,
   resetCountdownCommit,
   resetCountdownRollback,
-  setTimerDuration
+  setTimerDuration,
+  startCountdownCommit,
+  startCountdownRollback,
+  stopCountdownCommit,
+  stopCountdownRollback
 } = createActions({
-  START_COUNTDOWN_COMMIT: undefined,
-  START_COUNTDOWN_ROLLBACK: undefined,
   COMPLETE_COUNTDOWN_COMMIT: undefined,
   COMPLETE_COUNTDOWN_ROLLBACK: undefined,
-  STOP_COUNTDOWN_COMMIT: undefined,
-  STOP_COUNTDOWN_ROLLBACK: undefined,
   PAUSE_COUNTDOWN_COMMIT: undefined,
   PAUSE_COUNTDOWN_ROLLBACK: undefined,
+  PLAY_ALARM: undefined,
   RESET_COUNTDOWN_COMMIT: undefined,
   RESET_COUNTDOWN_ROLLBACK: undefined,
-  SET_TIMER_DURATION: (durationType) => ({ durationType })
+  SET_TIMER_DURATION: (durationType) => ({ durationType }),
+  START_COUNTDOWN_COMMIT: undefined,
+  START_COUNTDOWN_ROLLBACK: undefined,
+  STOP_COUNTDOWN_COMMIT: undefined,
+  STOP_COUNTDOWN_ROLLBACK: undefined
 });
 
 export const actionCreators = createActions({
@@ -126,12 +131,13 @@ const reducer = handleActions(
     [resetCountdown]: (state) => ({ ...state, isElapsing: false, isPaused: false, elapsedTimeInSeconds: 0 }),
     [setTimerDuration]: (state, action) => {
       switch (action.payload.durationType) {
+        // TODO: (bdietz) - would be good to have this enumerated somewhere and linked where the dropdown is
         case "focus":
-          return { ...state, timerDuration: 25 };
+          return { ...state, timerDuration: minutesInSeconds(25) };
         case "short-break":
-          return { ...state, timerDuration: 5 };
+          return { ...state, timerDuration: minutesInSeconds(5) };
         case "long-break":
-          return { ...state, timerDuration: 15 };
+          return { ...state, timerDuration: minutesInSeconds(15) };
         default:
           return state;
       }
@@ -147,13 +153,34 @@ const getTimerDuration = state => state.countdown.timerDuration;
 const getIsElapsing = state => state.countdown.isElapsing;
 const getIsStopped = state => state.countdown.isStopped;
 const getIsComplete = state => state.countdown.isComplete;
+const getPrettyTime = state => {
+  const { timerDuration, elapsedTimeInSeconds } = state.countdown;
+
+  const totalTimeLeft = timerDuration - elapsedTimeInSeconds;
+  const totalMinutesLeft = Math.floor(totalTimeLeft / 60);
+  const secondToSubtract = elapsedTimeInSeconds % 60;
+  const seconds = timerDuration < 60
+    ? timerDuration - elapsedTimeInSeconds
+    : (60 - secondToSubtract) % 60;
+
+  const totalMinutesLeftPretty = totalMinutesLeft < 10
+    ? `0${totalMinutesLeft}`
+    : totalMinutesLeft;
+
+  const totalSecondsLeftPretty = seconds < 10
+    ? `0${seconds}`
+    : seconds;
+
+  return `${totalMinutesLeftPretty}:${totalSecondsLeftPretty}`;
+};
 
 export const selectors = {
   getElapsedTimeInSeconds,
   getTimerDuration,
   getIsElapsing,
   getIsComplete,
-  getIsStopped
+  getIsStopped,
+  getPrettyTime
 };
 
 const startCountdownEpic = (action$, store) =>
@@ -178,8 +205,17 @@ const startCountdownEpic = (action$, store) =>
       }));
 
 const changeTimerDurationEpic = (action$) => action$
-  .filter((action) => (action.type === "@@redux-form/CHANGE") && (action.meta.form === "currentDurationLengthForm"))
+  .filter((action) => (filterFormActionOnField("CHANGE", "currentDurationLengthForm", "duration")(action)))
   .map((action) => setTimerDuration(action.payload));
+
+const playAlarmEpic = (action$) => action$.ofType(completeCountdown)
+  .do(() => {
+  // eslint-disable-next-line no-undef
+  const audio = new Audio("https://freesound.org/data/previews/250/250629_4486188-lq.mp3");
+  audio.play();
+
+  return playAlarm();
+});
 
 export {
 // eslint-disable-next-line import/prefer-default-export
@@ -187,5 +223,6 @@ export {
 };
 export const epics = {
   startCountdownEpic,
-  changeTimerDurationEpic
+  changeTimerDurationEpic,
+  playAlarmEpic
 };

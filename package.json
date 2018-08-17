@@ -68,6 +68,7 @@
     "jss": "^9.8.7",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
+    "react-document-title": "^2.0.3",
     "react-dom": "^16.4.1",
     "react-jss": "^8.6.1",
     "react-redux": "^5.0.7",
