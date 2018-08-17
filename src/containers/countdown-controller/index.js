@@ -13,7 +13,6 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import PropTypes from "prop-types";
 import Typography from "@material-ui/core/Typography";
 import classnames from "classnames";
-import red from "@material-ui/core/colors/red";
 import { Select, TextField } from "redux-form-material-ui";
 import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
@@ -32,41 +31,7 @@ import {
   resetCountdown,
   startCountdown
 } from "../../redux/modules/countdown/action-creators";
-
-const styles = theme => ({
-  card: {
-    minWidth: 275
-  },
-  cardContent: {
-    textAlign: "center"
-  },
-  button: {
-    margin: theme.spacing.unit
-  },
-  media: {
-    height: 0,
-    paddingTop: "56.25%" // 16:9
-  },
-  actions: {
-    display: "flex"
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest
-    }),
-    marginLeft: "auto"
-  },
-  expandOpen: {
-    transform: "rotate(180deg)"
-  },
-  avatar: {
-    backgroundColor: red[500]
-  },
-  progressIndicator: {
-    flexGrow: 1,
-  }
-});
+import styles from "./countdown-controller.style";
 
 let PomodoroDurationLengthSelector = () => (
   <form>
