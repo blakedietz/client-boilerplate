@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const publicPath = require("./webpack-helper").ASSET_PATH;
-const webpack = require("webpack");
+const ManifestPlugin = require("webpack-manifest-plugin");
 
 const commonConfig = {
   entry: {
@@ -11,7 +11,7 @@ const commonConfig = {
   },
 
   output: {
-    path: path.join(__dirname, "dist"),
+    path: path.join(process.cwd(), "dist"),
     filename: "[name].bundle.[hash].js",
     publicPath,
     sourceMapFilename: "[name].map"
@@ -64,6 +64,12 @@ const commonConfig = {
       title: "App Boilerplate",
       template: require("html-webpack-template"),
       appMountId: "app",
+      links: [
+        {
+          href: "/manifest.json",
+          rel: "manifest"
+        }
+      ],
       meta: [
         {
           name: "description",
@@ -76,7 +82,8 @@ const commonConfig = {
         }
       ],
       lang: "en-US"
-    })
+    }),
+    new ManifestPlugin()
   ]
 };
 
