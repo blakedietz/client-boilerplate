@@ -40,7 +40,7 @@ const changeTimerDurationEpic = (action$) => action$
   .map((action) => setTimerDuration(action.payload));
 
 const playAlarmEpic = (action$) => action$.ofType(completeCountdown)
-  .do(() => {
+  .map(() => {
     // eslint-disable-next-line no-undef
     const audio = new Audio("https://freesound.org/data/previews/250/250629_4486188-lq.mp3");
     audio.play();
