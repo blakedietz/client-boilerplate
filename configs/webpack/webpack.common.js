@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const publicPath = require("./webpack-helper").ASSET_PATH;
 const ManifestPlugin = require("webpack-manifest-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const commonConfig = {
   entry: {
@@ -83,7 +84,68 @@ const commonConfig = {
       ],
       lang: "en-US"
     }),
-    new ManifestPlugin()
+    new CopyWebpackPlugin([
+      { from: 'static' }
+    ]),
+    new ManifestPlugin({
+      /*
+       Defines the properties set in a web app manifest read more about what the properties of a manifest can be:
+       https://developers.google.com/web/fundamentals/web-app-manifest
+       */
+
+      seed:{
+        "short_name": "Green 🍅s",
+        "name": "Green Tomatoes",
+        // Success: add a query string to the end of the start_url to track how often your app is launched.
+        "start_url":"/?utm_source=a2hs",
+        "background_color": "#3367D6",
+        "display": "standalone",
+        "scope": "/",
+        "theme_color": "#3367D6",
+        "icons": [
+          {
+            "src": "images/icons/icon-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+          },
+          {
+            "src": "images/icons/icon-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+          },
+          {
+            "src": "images/icons/icon-128x128.png",
+            "sizes": "128x128",
+            "type": "image/png"
+          },
+          {
+            "src": "images/icons/icon-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+          },
+          {
+            "src": "images/icons/icon-152x152.png",
+            "sizes": "152x152",
+            "type": "image/png"
+          },
+          {
+            "src": "images/icons/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+          },
+          {
+            "src": "images/icons/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+          },
+          {
+            "src": "images/icons/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+          }
+        ]
+      }
+    })
   ]
 };
 

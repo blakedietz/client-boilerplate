@@ -42,7 +42,8 @@ class RootContainer extends Component {
             <main className={classes.site}>
               <Paper>
                 <CountDownController />
-              </Paper>
+              </Paper
+              >
             </main>
           </div>
         </DocumentTitle>
