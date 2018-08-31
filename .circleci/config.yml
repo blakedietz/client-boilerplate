@@ -31,9 +31,9 @@ jobs:
       - run:
           name: Run ES Lint
           command: yarn lint
-      - run:
-          name: Run unit tests
-          command: yarn test
+#      - run:
+#          name: Run unit tests
+#          command: yarn test
       - run:
           name: Build the source into a Webpack bundle
           command: yarn build
@@ -66,9 +66,9 @@ jobs:
       - run:
           name: Run ES Lint
           command: yarn lint
-      - run:
-          name: Run unit tests
-          command: yarn test
+#      - run:
+#          name: Run unit tests
+#          command: yarn test
       - run:
           name: Build the source into a Webpack bundle
           command: yarn build
