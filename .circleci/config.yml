@@ -36,7 +36,7 @@ jobs:
 #          command: yarn test
       - run:
           name: Build the source into a Webpack bundle
-          command: yarn build
+          command: yarn build:dist
       - run:
           name: Run semantic-release
           command: yarn semantic-release
@@ -71,7 +71,7 @@ jobs:
 #          command: yarn test
       - run:
           name: Build the source into a Webpack bundle
-          command: yarn build
+          command: yarn build:dist
       - run:
           name: Sync the contents of dist to S3
           command: aws s3 sync ./dist s3://pomodoro-app/${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}
