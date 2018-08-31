@@ -4,6 +4,7 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const publicPath = require("./webpack-helper").ASSET_PATH;
 const ManifestPlugin = require("webpack-manifest-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const OfflinePlugin = require('offline-plugin');
 
 const commonConfig = {
   entry: {
@@ -82,7 +83,9 @@ const commonConfig = {
           content: "width=device-width"
         }
       ],
-      lang: "en-US"
+      lang: "en-US",
+      bodyHtmlSnippet: `<noscript><img style="height: auto; width: 100%" src="http://hellofromtomorrow.com/wp-content/uploads/2016/08/HFT-headergraphic.png" alt="">Your browser doesn't support javascript</noscript>`,
+      headHtmlSnippet: "<meta name=\"theme-color\" content=\"#db5945\">"
     }),
     new CopyWebpackPlugin([
       { from: 'static' }
@@ -145,7 +148,8 @@ const commonConfig = {
           }
         ]
       }
-    })
+    }),
+    new OfflinePlugin()
   ]
 };
 
