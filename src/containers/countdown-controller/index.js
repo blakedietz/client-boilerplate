@@ -36,9 +36,9 @@ import styles from "./countdown-controller.style";
 let PomodoroDurationLengthSelector = () => (
   <form>
     <Field name="duration" component={Select} placeholder="Select a time">
-      <MenuItem value="focus">Focus</MenuItem>
-      <MenuItem value="short-break">Short Break</MenuItem>
-      <MenuItem value="long-break">Long Break</MenuItem>
+      <MenuItem aria-label="Focus" value="focus">Focus</MenuItem>
+      <MenuItem aria-label="Short break" value="short-break">Short Break</MenuItem>
+      <MenuItem aria-label="Long break" value="long-break">Long Break</MenuItem>
     </Field>
   </form>
 );
@@ -50,6 +50,9 @@ let TaskTextField = () => (
     <Field
       name="taskName"
       component={TextField}
+      inputProps={{
+        "aria-label": "Task name"
+      }}
       InputLabelProps={{
              shrink: true,
            }}
@@ -103,7 +106,7 @@ class CountdownController extends Component {
                 <TaskTextField />
               }
               action={
-                <IconButton>
+                <IconButton aria-label="More" >
                   <MoreVertIcon />
                 </IconButton>
               }
@@ -124,6 +127,7 @@ class CountdownController extends Component {
             </CardContent>
             <CardActions>
               <Button
+                aria-label="Start"
                 variant="contained"
                 color="primary"
                 className={classes.button}
@@ -133,6 +137,7 @@ class CountdownController extends Component {
                 Start
               </Button>
               <Button
+                aria-label="Pause"
                 variant="contained"
                 color="secondary"
                 className={classes.button}
@@ -142,6 +147,7 @@ class CountdownController extends Component {
                 Pause
               </Button>
               <Button
+                aria-label="Reset"
                 variant="contained"
                 className={classes.button}
                 onClick={this.props.resetCountdown}
@@ -150,12 +156,12 @@ class CountdownController extends Component {
               </Button>
               <PomodoroDurationLengthSelector />
               <IconButton
+                aria-label="Show more"
                 className={classnames(classes.expand, {
                   [classes.expandOpen]: this.state.expanded
                 })}
                 onClick={this.handleExpandClick}
                 aria-expanded={this.state.expanded}
-                aria-label="Show more"
               >
                 <ExpandMoreIcon />
               </IconButton>
