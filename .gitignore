@@ -60,3 +60,5 @@ typings/
 .vscode
 
 dist
+/configs/webpack/dev-server/localhost.crt
+/configs/webpack/dev-server/localhost.key
