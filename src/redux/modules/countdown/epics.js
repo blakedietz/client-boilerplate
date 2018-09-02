@@ -15,6 +15,11 @@ import { empty } from "../app/action-creators";
 import { filterFormActionOnField } from "./redux-form-filters";
 import { getElapsedTimeInSeconds, getTimerDuration, getIsElapsing, getTimerStart } from "./selectors";
 
+const convertToListOfObservables = (...actions) => {
+  const action$ = actions.map(action => Observable.of(action));
+  return Observable.concat(...action$);
+};
+
 const startCountdownEpic = (action$, store) =>
 
   action$.ofType(startCountdown)
@@ -49,16 +54,16 @@ const resumeFromClose = (action$, store) => action$
     const isElapsing = getIsElapsing(store.getState());
 
     if (isElapsing && (timeSinceStart > timerDuration)) {
-      return completeCountdown();
+      return convertToListOfObservables(completeCountdown());
     }
     else if (isElapsing && (timeSinceStart < timerDuration)) {
-      return Observable.concat(
-        Observable.of(setTimerElapsedTime(timeSinceStart)),
-        Observable.of(startCountdown())
+      return convertToListOfObservables(
+        setTimerElapsedTime(timeSinceStart),
+        startCountdown()
       );
     }
 
-    return empty();
+    return convertToListOfObservables(empty());
   });
 
 const changeTimerDurationEpic = (action$) => action$
