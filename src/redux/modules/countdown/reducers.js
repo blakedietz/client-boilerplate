@@ -6,6 +6,7 @@ import {
   pauseCountdown,
   resetCountdown,
   setTimerDuration,
+  setTimerElapsedTime,
   startCountdown,
   stopCountdown
 } from "./action-creators";
@@ -13,21 +14,40 @@ import {
 
 const defaultState = {
   elapsedTimeInSeconds: 0,
+  hasStarted: false,
   isComplete: false,
   isElapsing: false,
   isStopped: false,
   isPaused: false,
-  timerDuration: 5
+  timerDuration: minutesInSeconds(5),
+  timerStart: null
 };
 
 const reducer = handleActions(
   {
-    [completeCountdown]: (state) => ({ ...state, isElapsing: false, isComplete: true }),
+    [completeCountdown]: (state) => ({
+      ...state,
+      isElapsing: false,
+      isComplete: true,
+      elapsedTimeInSeconds: defaultState.timerDuration
+    }),
     [incrementAsync]: (state) => ({ ...state, elapsedTimeInSeconds: (state.elapsedTimeInSeconds + 1) }),
-    [startCountdown]: (state) => ({ ...state, isElapsing: true }),
+    [startCountdown]: (state, action) => ({
+      ...state,
+      isElapsing: true,
+      hasStarted: true,
+      timerStart: action.payload.startTime
+    }),
     [stopCountdown]: (state) => ({ ...state, isElapsing: false, isStopped: true }),
-    [pauseCountdown]: (state) => ({ ...state, isElapsing: false, isPaused: true }),
-    [resetCountdown]: (state) => ({ ...state, isElapsing: false, isPaused: false, elapsedTimeInSeconds: 0 }),
+    [pauseCountdown]: (state) => ({ ...state, isElapsing: false, isPaused: true, hasStarted: false }),
+    [resetCountdown]: (state) => ({
+      ...state,
+      isElapsing: false,
+      isPaused: false,
+      elapsedTimeInSeconds: 0,
+      hasStarted: false,
+      timerStart: null
+    }),
     [setTimerDuration]: (state, action) => {
       switch (action.payload.durationType) {
         // TODO: (bdietz) - would be good to have this enumerated somewhere and linked where the dropdown is
@@ -40,7 +60,8 @@ const reducer = handleActions(
         default:
           return state;
       }
-    }
+    },
+    [setTimerElapsedTime]: (state, action) =>  ({...state, elapsedTime: action.payload.elapsedTime })
   },
   defaultState
 );

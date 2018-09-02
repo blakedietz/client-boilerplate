@@ -12,8 +12,8 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { routerMiddleware } from "react-router-redux";
 import { rootEpic } from "./root-epic";
 import rootReducer from "./root-reducer";
-import { offline } from "redux-offline";
-import offlineConfig from "redux-offline/lib/defaults";
+import { createOffline } from '@redux-offline/redux-offline';
+import offlineConfig from '@redux-offline/redux-offline/lib/defaults';
 
 // Check to see if there's redux dev tools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -24,21 +24,19 @@ const epicMiddleware = createEpicMiddleware(rootEpic);
 
 
 function configureStore(initialState) {
-  const enhancers = composeEnhancers(
-    applyMiddleware(
-      epicMiddleware,
-      routerMiddleware(history)
-    ),
-    offline(offlineConfig),
-    // https://github.com/zalmoxisus/redux-devtools-extension/issues/365
-    (createStore) => (reducer, preloadedState, enhancer) => enhancer(createStore)(reducer, preloadedState)
-  );
+  const middlewareList = [
+    epicMiddleware,
+    routerMiddleware(history)
+  ];
 
-  const store = createStore(
-    rootReducer,
-    initialState,
-    enhancers
-  );
+  const {
+    middleware: offlineMiddleware,
+    enhanceReducer,
+    enhanceStore
+  } = createOffline(offlineConfig);
+  const middleware = applyMiddleware(...middlewareList, offlineMiddleware);
+
+  const store = createStore(enhanceReducer(rootReducer), composeEnhancers(enhanceStore, middleware));
 
   /**
    * Consolidate to a single file instead. Just switch on prod v

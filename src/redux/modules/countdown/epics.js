@@ -7,11 +7,13 @@ import {
   playAlarm,
   resetCountdown,
   setTimerDuration,
+  setTimerElapsedTime,
   startCountdown,
   stopCountdown
 } from "./action-creators";
+import { empty } from "../app/action-creators";
 import { filterFormActionOnField } from "./redux-form-filters";
-import { getElapsedTimeInSeconds, getTimerDuration } from "./selectors";
+import { getElapsedTimeInSeconds, getTimerDuration, getIsElapsing, getTimerStart } from "./selectors";
 
 const startCountdownEpic = (action$, store) =>
 
@@ -35,6 +37,30 @@ const startCountdownEpic = (action$, store) =>
         return incrementAsync();
       }));
 
+const resumeFromClose = (action$, store) => action$
+  .ofType("persist/REHYDRATE")
+  .flatMap(() => {
+    const startTime = (typeof getTimerStart(store.getState())) !== "number"
+    ? 0
+    : getTimerStart(store.getState());
+    const currentTime = Date.now();
+    const timeSinceStart = Math.floor(Math.abs(startTime - currentTime) / 1000);
+    const timerDuration = getTimerDuration(store.getState());
+    const isElapsing = getIsElapsing(store.getState());
+
+    if (isElapsing && (timeSinceStart > timerDuration)) {
+      return completeCountdown();
+    }
+    else if (isElapsing && (timeSinceStart < timerDuration)) {
+      return Observable.concat(
+        Observable.of(setTimerElapsedTime(timeSinceStart)),
+        Observable.of(startCountdown())
+      );
+    }
+
+    return empty();
+  });
+
 const changeTimerDurationEpic = (action$) => action$
   .filter((action) => (filterFormActionOnField("CHANGE", "currentDurationLengthForm", "duration")(action)))
   .map((action) => setTimerDuration(action.payload));
@@ -52,6 +78,7 @@ const playAlarmEpic = (action$) => action$.ofType(completeCountdown)
 export {
   changeTimerDurationEpic,
   playAlarmEpic,
+  resumeFromClose,
   // eslint-disable-next-line import/prefer-default-export
   startCountdownEpic
 };

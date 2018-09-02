@@ -9,6 +9,7 @@ const {
   resetCountdownCommit,
   resetCountdownRollback,
   setTimerDuration,
+  setTimerElapsedTime,
   startCountdownCommit,
   startCountdownRollback,
   stopCountdownCommit,
@@ -22,6 +23,7 @@ const {
   RESET_COUNTDOWN_COMMIT: undefined,
   RESET_COUNTDOWN_ROLLBACK: undefined,
   SET_TIMER_DURATION: (durationType) => ({ durationType }),
+  SET_TIMER_ELAPSED_TIME: (elapsedTime) => ({ elapsedTime }),
   START_COUNTDOWN_COMMIT: undefined,
   START_COUNTDOWN_ROLLBACK: undefined,
   STOP_COUNTDOWN_COMMIT: undefined,
@@ -40,7 +42,7 @@ const {
   INCREMENT_ASYNC: undefined,
   CANCEL_INCREMENT_ASYNC: undefined,
   START_COUNTDOWN: [
-    undefined,
+    ({startTime} = {}) => ({ startTime }),
     () => ({
       offline: {
         // the network action to execute:
@@ -120,6 +122,7 @@ export {
   resetCountdownCommit,
   resetCountdownRollback,
   setTimerDuration,
+  setTimerElapsedTime,
   startCountdown,
   startCountdownCommit,
   startCountdownRollback,
