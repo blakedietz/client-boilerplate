@@ -14,7 +14,7 @@ module.exports = Merge(CommonConfig, {
       key: fs.readFileSync(require.resolve("./dev-server/localhost.key")),
       cert: fs.readFileSync(require.resolve("./dev-server/localhost.crt"))
     },
-    port: 7777,
+    port: 8888,
     host: "localhost",
     historyApiFallback: true,
     noInfo: false,

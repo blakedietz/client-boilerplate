@@ -13,7 +13,7 @@ import {
 } from "./action-creators";
 import { empty } from "../app/action-creators";
 import { filterFormActionOnField } from "./redux-form-filters";
-import { getElapsedTimeInSeconds, getTimerDuration, getIsElapsing, getTimerStart } from "./selectors";
+import { getElapsedTimeInSeconds, getTimerDuration, getIsElapsing, getTimerStart, getCurrentTime } from "./selectors";
 
 const convertToListOfObservables = (...actions) => {
   const action$ = actions.map(action => Observable.of(action));
@@ -39,28 +39,37 @@ const startCountdownEpic = (action$, store) =>
         }
         // increment async action
 
-        return incrementAsync();
+        return incrementAsync(Date.now());
       }));
 
 const resumeFromClose = (action$, store) => action$
   .ofType("persist/REHYDRATE")
   .flatMap(() => {
-    const startTime = (typeof getTimerStart(store.getState())) !== "number"
-    ? 0
-    : getTimerStart(store.getState());
-    const currentTime = Date.now();
-    const timeSinceStart = Math.floor(Math.abs(startTime - currentTime) / 1000);
-    const timerDuration = getTimerDuration(store.getState());
+    const state = store.getState();
     const isElapsing = getIsElapsing(store.getState());
 
-    if (isElapsing && (timeSinceStart > timerDuration)) {
-      return convertToListOfObservables(completeCountdown());
-    }
-    else if (isElapsing && (timeSinceStart < timerDuration)) {
-      return convertToListOfObservables(
-        setTimerElapsedTime(timeSinceStart),
-        startCountdown()
-      );
+    // The user has started the application and left the page somehow
+    if (isElapsing) {
+      const currentTime = Date.now();
+      const lastIncrementedTime = getCurrentTime(state);
+      const timeSinceIncrement = Math.floor(Math.abs(lastIncrementedTime - currentTime) / 1000);
+      const elapsedTime = getElapsedTimeInSeconds(state);
+      const timerDuration = getTimerDuration(state);
+      console.log("elapsed time", elapsedTime);
+      console.log("timeSinceStart", timeSinceIncrement);
+
+
+      if ((timeSinceIncrement !== 0))
+      {
+        if ((timeSinceIncrement + elapsedTime) > timerDuration) {
+          return convertToListOfObservables(completeCountdown());
+        }
+
+        return convertToListOfObservables(
+          setTimerElapsedTime(timeSinceIncrement + elapsedTime),
+          startCountdown({ startTime: Date.now()})
+        );
+      }
     }
 
     return convertToListOfObservables(empty());

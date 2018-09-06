@@ -13,7 +13,7 @@ import { ConnectedRouter } from "react-router-redux";
 import configureStore, { history } from "./redux/configure-store";
 import RootContainer from "./containers/root-container";
 
-OfflinePluginRuntime.install();
+// OfflinePluginRuntime.install();
 
 // A theme with custom primary and secondary color.
 // It's optional.

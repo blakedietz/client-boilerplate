@@ -1,3 +1,4 @@
+export const getCurrentTime = (state) => state.countdown.currentTime;
 export const getElapsedTimeInSeconds = state => state.countdown.elapsedTimeInSeconds;
 export const getIsComplete = state => state.countdown.isComplete;
 export const getIsElapsing = state => state.countdown.isElapsing;

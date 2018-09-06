@@ -153,7 +153,7 @@ const commonConfig = {
         ]
       }
     }),
-    new OfflinePlugin()
+    // new OfflinePlugin()
   ]
 };
 

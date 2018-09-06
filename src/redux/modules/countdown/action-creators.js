@@ -39,7 +39,7 @@ const {
   completeCountdown,
   resetCountdown
 } = createActions({
-  INCREMENT_ASYNC: undefined,
+  INCREMENT_ASYNC: (currentTime) => ({ currentTime }),
   CANCEL_INCREMENT_ASYNC: undefined,
   START_COUNTDOWN: [
     ({startTime} = {}) => ({ startTime }),
