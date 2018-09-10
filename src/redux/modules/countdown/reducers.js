@@ -30,7 +30,7 @@ const reducer = handleActions(
       ...state,
       isElapsing: false,
       isComplete: true,
-      elapsedTimeInSeconds: defaultState.timerDuration
+      elapsedTimeInSeconds: state.timerDuration
     }),
     [incrementAsync]: (state, action) => ({ ...state, elapsedTimeInSeconds: (state.elapsedTimeInSeconds + 1) , currentTime: action.payload.currentTime }),
     [startCountdown]: (state, action) => ({

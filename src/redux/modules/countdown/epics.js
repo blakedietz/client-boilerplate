@@ -13,7 +13,7 @@ import {
 } from "./action-creators";
 import { empty } from "../app/action-creators";
 import { filterFormActionOnField } from "./redux-form-filters";
-import { getElapsedTimeInSeconds, getTimerDuration, getIsElapsing, getTimerStart, getCurrentTime } from "./selectors";
+import { getElapsedTimeInSeconds, getTimerDuration, getIsElapsing, getCurrentTime } from "./selectors";
 
 const convertToListOfObservables = (...actions) => {
   const action$ = actions.map(action => Observable.of(action));
@@ -55,9 +55,6 @@ const resumeFromClose = (action$, store) => action$
       const timeSinceIncrement = Math.floor(Math.abs(lastIncrementedTime - currentTime) / 1000);
       const elapsedTime = getElapsedTimeInSeconds(state);
       const timerDuration = getTimerDuration(state);
-      console.log("elapsed time", elapsedTime);
-      console.log("timeSinceStart", timeSinceIncrement);
-
 
       if ((timeSinceIncrement !== 0))
       {
