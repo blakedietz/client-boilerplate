@@ -15,7 +15,6 @@ import {
 const defaultState = {
   elapsedTimeInSeconds: 0,
   currentTime: null,
-  hasStarted: false,
   isComplete: false,
   isElapsing: false,
   isStopped: false,
@@ -36,17 +35,17 @@ const reducer = handleActions(
     [startCountdown]: (state, action) => ({
       ...state,
       isElapsing: true,
-      hasStarted: true,
+      isPaused: false,
       timerStart: action.payload.startTime
     }),
     [stopCountdown]: (state) => ({ ...state, isElapsing: false, isStopped: true }),
-    [pauseCountdown]: (state) => ({ ...state, isElapsing: false, isPaused: true, hasStarted: false }),
+    [pauseCountdown]: (state) => ({ ...state, isElapsing: false, isPaused: true }),
     [resetCountdown]: (state) => ({
       ...state,
       isElapsing: false,
+      isComplete: false,
       isPaused: false,
       elapsedTimeInSeconds: 0,
-      hasStarted: false,
       timerStart: null
     }),
     [setTimerDuration]: (state, action) => {
