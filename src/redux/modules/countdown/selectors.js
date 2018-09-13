@@ -5,7 +5,6 @@ export const getIsElapsing = state => state.countdown.isElapsing;
 export const getIsPaused = state => state.countdown.isPaused;
 export const getIsStopped = state => state.countdown.isStopped;
 export const getTimerDuration = state => state.countdown.timerDuration;
-export const getTimerStart = state => state.countdown.timerStart;
 export const getPrettyTime = state => {
   const { timerDuration, elapsedTimeInSeconds } = state.countdown;
 

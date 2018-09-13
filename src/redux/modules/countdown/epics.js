@@ -64,7 +64,7 @@ const resumeFromClose = (action$, store) => action$
 
         return convertToListOfObservables(
           setTimerElapsedTime(timeSinceIncrement + elapsedTime),
-          startCountdown({ startTime: Date.now()})
+          startCountdown()
         );
       }
     }

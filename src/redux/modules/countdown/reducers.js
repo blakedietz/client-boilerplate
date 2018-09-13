@@ -1,5 +1,5 @@
 import { handleActions } from "redux-actions";
-import { minutesInSeconds } from "../../../utilities/time-utilities";
+import { minutesInSecondsFromDurationType } from "../../../utilities/time-utilities";
 import {
   completeCountdown,
   incrementAsync,
@@ -10,6 +10,7 @@ import {
   startCountdown,
   stopCountdown
 } from "./action-creators";
+import { FOCUS, LONG_BREAK, SHORT_BREAK } from "../../../utilities/duration-types";
 
 
 const defaultState = {
@@ -19,8 +20,8 @@ const defaultState = {
   isElapsing: false,
   isStopped: false,
   isPaused: false,
-  timerDuration: minutesInSeconds(5),
-  timerStart: null
+  timerDuration: minutesInSecondsFromDurationType(FOCUS),
+  durationType: FOCUS
 };
 
 const reducer = handleActions(
@@ -32,11 +33,10 @@ const reducer = handleActions(
       elapsedTimeInSeconds: state.timerDuration
     }),
     [incrementAsync]: (state, action) => ({ ...state, elapsedTimeInSeconds: (state.elapsedTimeInSeconds + 1) , currentTime: action.payload.currentTime }),
-    [startCountdown]: (state, action) => ({
+    [startCountdown]: (state) => ({
       ...state,
       isElapsing: true,
-      isPaused: false,
-      timerStart: action.payload.startTime
+      isPaused: false
     }),
     [stopCountdown]: (state) => ({ ...state, isElapsing: false, isStopped: true }),
     [pauseCountdown]: (state) => ({ ...state, isElapsing: false, isPaused: true }),
@@ -46,17 +46,16 @@ const reducer = handleActions(
       isComplete: false,
       isPaused: false,
       elapsedTimeInSeconds: 0,
-      timerStart: null
     }),
     [setTimerDuration]: (state, action) => {
       switch (action.payload.durationType) {
         // TODO: (bdietz) - would be good to have this enumerated somewhere and linked where the dropdown is
-        case "focus":
-          return { ...state, timerDuration: minutesInSeconds(25) };
-        case "short-break":
-          return { ...state, timerDuration: minutesInSeconds(5) };
-        case "long-break":
-          return { ...state, timerDuration: minutesInSeconds(15) };
+        case FOCUS:
+          return { ...state, timerDuration: minutesInSecondsFromDurationType(FOCUS) };
+        case SHORT_BREAK:
+          return { ...state, timerDuration: minutesInSecondsFromDurationType(SHORT_BREAK) };
+        case LONG_BREAK:
+          return { ...state, timerDuration: minutesInSecondsFromDurationType(LONG_BREAK) };
         default:
           return state;
       }

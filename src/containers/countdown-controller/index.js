@@ -194,7 +194,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  startCountdown: () => dispatch(startCountdown({startTime: Date.now()})),
+  startCountdown: () => dispatch(startCountdown()),
   pauseCountdown: () => dispatch(pauseCountdown()),
   resetCountdown: () => dispatch(resetCountdown())
 });

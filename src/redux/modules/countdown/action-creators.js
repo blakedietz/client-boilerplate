@@ -42,7 +42,7 @@ const {
   INCREMENT_ASYNC: (currentTime) => ({ currentTime }),
   CANCEL_INCREMENT_ASYNC: undefined,
   START_COUNTDOWN: [
-    ({startTime} = {}) => ({ startTime }),
+    undefined,
     () => ({
       offline: {
         // the network action to execute:
