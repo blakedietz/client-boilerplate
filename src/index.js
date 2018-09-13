@@ -15,6 +15,12 @@ import RootContainer from "./containers/root-container";
 
 OfflinePluginRuntime.install();
 
+// eslint-disable-next-line
+window.addEventListener("beforeinstallprompt", function(e) {
+// eslint-disable-next-line
+  alert(`prompted breah ${JSON.stringify(e)}`);
+});
+
 // A theme with custom primary and secondary color.
 // It's optional.
 
