@@ -42,7 +42,7 @@ jobs:
           command: yarn semantic-release
       - run:
           name: Sync the contents of dist to S3 for consumption from the CDN
-          command: aws s3 sync ./dist s3://pomodoro-app/ ${CIRCLE_PROJECT_REPONAME}
+          command: aws s3 sync ./dist s3://pomodoro-app/ ${CIRCLE_PROJECT_REPONAME} --delete
 
   build-and-deploy-feature-branch:
     docker:

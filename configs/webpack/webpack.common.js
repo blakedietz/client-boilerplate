@@ -7,7 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 
 const releaseVersionString = process.env.RELEASE_VERSION
-  ? `v${process.env.RELEASE_VERSION}`
+  ? `.v${process.env.RELEASE_VERSION}`
   : '';
 
 const commonConfig = {
@@ -18,7 +18,7 @@ const commonConfig = {
 
   output: {
     path: path.join(process.cwd(), "dist"),
-    filename: `[name].bundle.[hash].${releaseVersionString}.js`,
+    filename: `[name].bundle.[hash]${releaseVersionString}.js`,
     publicPath,
     sourceMapFilename: "[name].map"
   },
