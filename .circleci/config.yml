@@ -42,7 +42,7 @@ jobs:
           command: yarn semantic-release
       - run:
           name: Sync the contents of dist to S3 for consumption from the CDN
-          command: aws s3 sync ./dist s3://pomodoro-app/ ${CIRCLE_PROJECT_REPONAME} --delete
+          command: aws s3 sync ./dist s3://pomodoro-app/${CIRCLE_PROJECT_REPONAME} --delete
 
   build-and-deploy-feature-branch:
     docker:
@@ -71,7 +71,7 @@ jobs:
 #          command: yarn test
       - run:
           name: Build the source into a Webpack bundle
-          command: yarn build:dist
+          command: export ASSET_PATH=${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}; yarn build:dist
       - run:
           name: Sync the contents of dist to S3
           command: aws s3 sync ./dist s3://pomodoro-app/${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}
