@@ -3,6 +3,7 @@ const CommonConfig = require("./webpack.common");
 const publicPath = require("./webpack-helper").ASSET_PATH;
 const webpack = require("webpack");
 const fs = require("fs");
+const OfflinePlugin = require('offline-plugin');
 
 module.exports = Merge(CommonConfig, {
   mode: "development",
@@ -28,6 +29,7 @@ module.exports = Merge(CommonConfig, {
   },
   plugins: [
     new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new OfflinePlugin()
   ]
 });

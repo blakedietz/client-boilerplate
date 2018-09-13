@@ -4,7 +4,6 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const publicPath = require("./webpack-helper").ASSET_PATH;
 const ManifestPlugin = require("webpack-manifest-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const OfflinePlugin = require('offline-plugin');
 
 const releaseVersionString = process.env.RELEASE_VERSION
   ? `.v${process.env.RELEASE_VERSION}`
@@ -153,7 +152,6 @@ const commonConfig = {
         ]
       }
     }),
-    // new OfflinePlugin()
   ]
 };
 

@@ -1,6 +1,7 @@
 const Merge = require("webpack-merge");
 const CommonConfig = require("./webpack.common.js");
 const webpack = require("webpack");
+const OfflinePlugin = require('offline-plugin');
 
 // Try the environment variable, otherwise use root
 const ASSET_PATH = process.env.ASSET_PATH || '/';
@@ -15,6 +16,13 @@ module.exports = Merge(CommonConfig, {
     // This makes it possible for us to safely use env vars on our code
     new webpack.DefinePlugin({
       'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH)
+    }),
+    new OfflinePlugin({
+      appShell: '/',
+      externals: [
+        '/'
+      ]
     })
+
   ]
 });
