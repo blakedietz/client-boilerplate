@@ -71,10 +71,10 @@ jobs:
 #          command: yarn test
       - run:
           name: Build the source into a Webpack bundle
-          command: export ASSET_PATH=${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}; yarn build:dist
+          command: yarn build:dist
       - run:
           name: Sync the contents of dist to S3
-          command: aws s3 sync ./dist s3://pomodoro-app/${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}
+          command: aws s3 sync ./dist s3://pomodoro-app
 
 workflows:
   version: 2
